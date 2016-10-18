@@ -1,0 +1,296 @@
+record( stringin, "$(P):IOC"){
+  field( VAL,  "$(IOC)")
+  field( DESC, "$(LOC)")
+  field( PINI, "1")
+}
+record( longin, "$(P):GPIB_ADDR"){
+  field( VAL,  "$(A)")
+  field( PINI, "1")
+}
+record( stringin, "$(P):START:TIME"){
+  field( DESC, "start date and time")
+  field( DTYP, "Soft Timestamp")
+  field( PINI, "YES")
+  field( INP,  "@%m/%d/%Y %H:%M:%S")
+}
+record( stringin, "$(P):CURR:TIME"){
+  field( DESC, "current date and time")
+  field( DTYP, "Soft Timestamp")
+  field( SCAN, "1 second")
+  field( INP,  "@%m/%d/%Y %H:%M:%S")
+}
+record( stringin, "$(P):WF:IDN") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) idn $(L) $(A)")
+}
+record( stringin, "$(P):SOURCE") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getSource $(L) $(A)")
+}
+# System ----------------------------------------------
+record( waveform, "$(P):SYST:ERR") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getErr $(L) $(A)")
+  field( FTVL, "CHAR")
+  field( NELM, "100")
+}
+record( stringin, "$(P):SYST:UNITS:PWR") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getPowerUnits $(L) $(A)")
+}
+# Acquire -----------------------------------------
+record( stringin, "$(P):ACQ:TYPE") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getAcqType $(L) $(A)")
+}
+record( stringin, "$(P):ACQ:CNT") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getAcqCnt $(L) $(A)")
+}
+record( stringin, "$(P):ACQ:PTS") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getAcqPts $(L) $(A)")
+}
+# Timebase ----------------------------------------------
+record( ao, "$(P):TIME:DELAY:SC"){
+  field( DESC, "")
+  field( OUT,  "$(P):TIME:DELAY:SET PP")
+  field( PREC, "3")
+  field( DRVH, "1e6")
+  field( DRVL, "-1e6")
+  field( HOPR, "1e6")
+  field( LOPR, "-1e-6")
+  field( FLNK, "$(P):TIME:DELAY.PROC")
+}
+record( ao, "$(P):TIME:DELAY:SET"){
+  field( SDIS, "$(P):TIME:DELAY:Sync.PACT")
+  field( DISV, "1")
+  field( DTYP, "stream")
+  field( OUT,  "@$(PROTOFILE) setTimeDelay $(L) $(A)")
+  field( PREC, "3")
+}
+record( ai, "$(P):TIME:DELAY") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getTimeDelay $(L) $(A)")
+  field( EGU,  "s")
+  field( PREC, "3")
+  field( FLNK, "$(P):TIME:DELAY:Sync")
+}
+record( ao, "$(P):TIME:DELAY:Sync"){
+  field( DOL,  "$(P):TIME:DELAY NPP")
+  field( OMSL, "closed_loop")
+  field( OUT,  "$(P):TIME:DELAY:SC PP")
+  field( PREC, "3")
+}
+record( stringin, "$(P):TIME:MODE") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getTimeMode $(L) $(A)")
+}
+record( ao, "$(P):TIME:RANGE:SC"){
+  field( DESC, "")
+  field( OUT,  "$(P):TIME:RANGE:SET PP")
+  field( PREC, "3")
+  field( DRVH, "50")
+  field( DRVL, "20e-9")
+  field( HOPR, "50")
+  field( LOPR, "20e-9")
+  field( FLNK, "$(P):TIME:RANGE.PROC")
+}
+record( ao, "$(P):TIME:RANGE:SET"){
+  field( SDIS, "$(P):TIME:RANGE:Sync.PACT")
+  field( DISV, "1")
+  field( DTYP, "stream")
+  field( OUT,  "@$(PROTOFILE) setTimeRange $(L) $(A)")
+  field( PREC, "3")
+}
+record( ai, "$(P):TIME:RANGE") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getTimeRange $(L) $(A)")
+  field( EGU,  "s")
+  field( PREC, "3")
+  field( FLNK, "$(P):TIME:RANGE:Sync")
+}
+record( ao, "$(P):TIME:RANGE:Sync"){
+  field( DOL,  "$(P):TIME:RANGE NPP")
+  field( OMSL, "closed_loop")
+  field( OUT,  "$(P):TIME:RANGE:SC PP")
+  field( PREC, "3")
+}
+# Trig ----------------------------------------------
+record( stringin, "$(P):TRIG:MODE") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getTrigMode $(L) $(A)")
+}
+record( stringin, "$(P):TRIG:SOURCE") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getTrigSource $(L) $(A)")
+}
+record( ai, "$(P):TRIG:LEVEL") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getTrigLevel $(L) $(A)")
+  field( PREC, "2")
+}
+record( stringin, "$(P):TRIG:UNITS") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getTrigLevelUnits $(L) $(A)")
+}
+record( stringin, "$(P):TRIG:SLOPE") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getTrigSlope $(L) $(A)")
+}
+# Run -----------------------------------------------
+record( bo, "$(P):RUN") {
+  field( DTYP, "stream")
+  field( OUT,  "@$(PROTOFILE) run $(L) $(A)")
+}
+# Init and read sequences ---------------------------
+record( seq, "$(P):SEQ01"){
+  field( DESC, "Initialization sequence")
+  field( LNK1, "$(P):WF:IDN.PROC")
+  field( DLY1, "$(DELAY1)")
+  field( LNK2, "$(P):TRIG:MODE.PROC")
+  field( DLY2, "$(DELAY1)")
+  field( LNK3, "$(P):SENSOR:CH1.PROC")
+  field( DLY3, "$(DELAY1)")
+  field( LNK4, "$(P):SENSOR:CH4.PROC")
+  field( DLY4, "$(DELAY1)")
+  field( LNK5, "$(P):SYST:ERR.PROC")
+  field( DLY5, "$(DELAY1)")
+  field( LNK6, "$(P):SYST:UNITS:PWR.PROC")
+  field( DLY6, "$(DELAY1)")
+  field( LNK7, "$(P):BWMODE:CH1.PROC")
+  field( DLY7, "$(DELAY1)")
+  field( LNK8, "$(P):BWMODE:CH4.PROC")
+  field( DLY8, "$(DELAY1)")
+  field( LNK9, "$(P):SEQ02.PROC")
+  field( DLY9, "$(DELAY1)")
+  field( PINI, "YES")
+  field( SCAN, "$(SCAN2)")
+}
+record( seq, "$(P):SEQ02"){
+  field( DESC, "Initialization sequence")
+  field( LNK1, "$(P):FACT:CH1.PROC")
+  field( DLY1, "$(DELAY1)")
+  field( LNK2, "$(P):FACT:CH4.PROC")
+  field( DLY2, "$(DELAY1)")
+  field( LNK3, "$(P):FREQ:CH1.PROC")
+  field( DLY3, "$(DELAY1)")
+  field( LNK4, "$(P):FREQ:CH4.PROC")
+  field( DLY4, "$(DELAY1)")
+  field( LNK5, "$(P):SOURCE.PROC")
+  field( DLY5, "$(DELAY1)")
+  field( LNK6, "$(P):COUPLING:CH2.PROC")
+  field( DLY6, "$(DELAY1)")
+  field( LNK7, "$(P):COUPLING:CH3.PROC")
+  field( DLY7, "$(DELAY1)")
+  field( LNK8, "$(P):TRIG:LEVEL.PROC")
+  field( DLY8, "$(DELAY1)")
+  field( LNK9, "$(P):SEQ03.PROC")
+  field( DLY9, "$(DELAY1)")
+}
+record( seq, "$(P):SEQ03"){
+  field( LNK1, "$(P):TRIG:UNITS.PROC")
+  field( DLY1, "$(DELAY1)")
+  field( LNK2, "$(P):TRIG:SLOPE.PROC")
+  field( DLY2, "$(DELAY1)")
+  field( LNK3, "$(P):TRIG:SOURCE.PROC")
+  field( DLY3, "$(DELAY1)")
+  field( LNK4, "$(P):TIME:DELAY.PROC")
+  field( DLY4, "$(DELAY1)")
+  field( LNK5, "$(P):TIME:MODE.PROC")
+  field( DLY5, "$(DELAY1)")
+  field( LNK6, "$(P):TIME:RANGE.PROC")
+  field( DLY6, "$(DELAY1)")
+  field( LNK7, "$(P):DIS:CH4.PROC")
+  field( DLY7, "$(DELAY1)")
+  field( LNK9, "$(P):RUN.PROC")
+  field( DLY9, "$(DELAY1)")
+}
+record( seq, "$(P):SEQ:CH1:1"){
+  field( DESC, "Get waveform ch1 sequence")
+  #field( LNK1, "$(P):DIG:CH1.PROC")
+  #field( DLY1, "$(DELAY2)")
+  field( LNK2, "$(P):DATA:SRC:CH1.PROC")
+  field( DLY2, "$(DELAY2)")
+  field( LNK3, "$(P):DATA:RAW:CH1.PROC")
+  field( DLY3, "$(DELAY2)")
+  field( LNK4, "$(P):DATA:PRE:CH1.PROC")
+  field( DLY4, "$(DELAY2)")
+  field( LNK5, "$(P):AS:PRE:CH1.PROC")
+  field( DLY5, "$(DELAY2)")
+  field( LNK6, "$(P):DATA:SCALED:CH1.PROC")
+  field( DLY6, "$(DELAY2)")
+  field( LNK7, "$(P):TIME:SCALED:CH1.PROC")
+  field( DLY7, "$(DELAY2)")
+  field( LNK8, "$(P):RUN.PROC")
+  field( DLY8, "$(DELAY2)")
+  field( LNK9, "$(P):SEQ:CH1:2.PROC")
+  field( DLY9, "$(DELAY2)")
+  field( SCAN, "$(SCAN1)")
+}
+record( seq, "$(P):SEQ:CH1:2"){
+  field( DESC, "Get waveform ch1 sequence")
+  field( LNK1, "$(P):DATA:FORMAT:CH1.PROC")
+  field( DLY1, "$(DELAY2)")
+  field( LNK2, "$(P):DATA:TYPE:CH1.PROC")
+  field( DLY2, "$(DELAY2)")
+  field( LNK3, "$(P):DATA:PTS:CH1.PROC")
+  field( DLY3, "$(DELAY2)")
+  field( LNK4, "$(P):DATA:CNT:CH1.PROC")
+  field( DLY4, "$(DELAY2)")
+  field( LNK5, "$(P):PMAX:CH1.PROC")
+  field( DLY5, "$(DELAY2)")
+  field( LNK6, "$(P):PMIN:CH1.PROC")
+  field( DLY6, "$(DELAY2)")
+  field( LNK7, "$(P):PAVE:CH1.PROC")
+  field( DLY7, "$(DELAY2)")
+  field( LNK9, "$(P):SEQ:CH4:1.PROC")
+  field( DLY9, "$(DELAY2)")
+}
+record( bo, "$(P):DIS:CH4"){
+  field( DESC, "Ch4 disable")
+  field( OUT,  "$(P):SEQ:CH4:1.DISA")
+  field( ZNAM, "Enabled")
+  field( ONAM, "Disabled")
+  field( VAL,  "1")
+}
+record( seq, "$(P):SEQ:CH4:1"){
+  field( DESC, "Get waveform ch4 sequence")
+  #field( LNK1, "$(P):DIG:CH4.PROC")
+  #field( DLY1, "$(DELAY2)")
+  field( LNK2, "$(P):DATA:SRC:CH4.PROC")
+  field( DLY2, "$(DELAY2)")
+  field( LNK3, "$(P):DATA:RAW:CH4.PROC")
+  field( DLY3, "$(DELAY2)")
+  field( LNK4, "$(P):DATA:PRE:CH4.PROC")
+  field( DLY4, "$(DELAY2)")
+  field( LNK5, "$(P):AS:PRE:CH4.PROC")
+  field( DLY5, "$(DELAY2)")
+  field( LNK6, "$(P):DATA:SCALED:CH4.PROC")
+  field( DLY6, "$(DELAY2)")
+  field( LNK7, "$(P):TIME:SCALED:CH4.PROC")
+  field( DLY7, "$(DELAY2)")
+  field( LNK8, "$(P):RUN.PROC")
+  field( DLY8, "$(DELAY2)")
+  field( LNK9, "$(P):SEQ:CH4:2.PROC")
+  field( DLY9, "$(DELAY2)")
+}
+record( seq, "$(P):SEQ:CH4:2"){
+  field( DESC, "Get waveform ch4 sequence")
+  field( LNK1, "$(P):DATA:FORMAT:CH4.PROC")
+  field( DLY1, "$(DELAY2)")
+  field( LNK2, "$(P):DATA:TYPE:CH4.PROC")
+  field( DLY2, "$(DELAY2)")
+  field( LNK3, "$(P):DATA:PTS:CH4.PROC")
+  field( DLY3, "$(DELAY2)")
+  field( LNK4, "$(P):DATA:CNT:CH4.PROC")
+  field( DLY4, "$(DELAY2)")
+  field( LNK5, "$(P):PMAX:CH4.PROC")
+  field( DLY5, "$(DELAY2)")
+  field( LNK6, "$(P):PMIN:CH4.PROC")
+  field( DLY6, "$(DELAY2)")
+  field( LNK7, "$(P):PAVE:CH4.PROC")
+  field( DLY7, "$(DELAY2)")
+}
+
+

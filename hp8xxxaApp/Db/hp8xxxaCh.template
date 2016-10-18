@@ -1,0 +1,164 @@
+# Digitize -----------------------------------------
+record( stringout, "$(P):DIG:CH$(N)") {
+  field( DTYP, "stream")
+  field( OUT,  "@$(PROTOFILE) digCh$(N) $(L) $(A)")
+  field( VAL,  "chan$(N)")
+}
+# Channel -----------------------------------------
+record( stringin, "$(P):SENSOR:CH$(N)") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getSensorCh$(N) $(L) $(A)")
+}
+record( stringin, "$(P):BWMODE:CH$(N)") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getBWModeCh$(N) $(L) $(A)")
+}
+record( ai, "$(P):FACT:CH$(N)") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getFactCh$(N) $(L) $(A)")
+  field( PREC, "5")
+}
+record( stringin, "$(P):COUPLING:CH2") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getCouplingCh2 $(L) $(A)")
+}
+record( stringin, "$(P):COUPLING:CH3") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getCouplingCh3 $(L) $(A)")
+}
+# Frequency -----------------------------------------
+record( ai, "$(P):FREQ:CH$(N)") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getFreqCh$(N) $(L) $(A)")
+  field( EGU,  "Hz")
+  field( HIHI, "11.4241E9")
+  field( LOLO, "11.4239E9")
+  field( HHSV, "MAJOR")
+  field( LLSV, "MAJOR")
+  field( PREC, "5")
+}
+# Waveform -----------------------------------------
+record( longout, "$(P):DATA:SRC:CH$(N)") {
+  field( DTYP, "stream")
+  field( OUT,  "@$(PROTOFILE) setWavSrc $(L) $(A)")
+  field( VAL,  "$(N)")
+}
+record( waveform, "$(P):DATA:RAW:CH$(N)") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getWav $(L) $(A)")
+  field( FTVL, "SHORT")
+  field( NELM, "500")
+}
+record( waveform, "$(P):DATA:PRE:CH$(N)") {
+  field( DTYP, "stream")
+  field( INP,  "@$(PROTOFILE) getPre $(L) $(A)")
+  field( FTVL, "CHAR")
+  field( NELM, "100")
+}
+record( ai, "$(P):CAL:CH$(N)") {
+  field( DESC, "Calibration Factor")
+  field( PREC, "3")
+  field( EGU,  "dB")
+  field( VAL,  "0")
+  field( PINI, "1")
+}
+record( mbbo, "$(P):UNITS:P:CH$(N)") {
+  field( ZRST, "W")
+  field( ONST, "MW")
+  field( TWST, "mW")
+  field( ZRVL, "0")
+  field( ONVL, "1")
+  field( TWVL, "2")
+}
+record( mbbi, "$(P):UNITS:T:CH$(N)") {
+  field( ZRST, "s")
+  field( ONST, "us")
+  field( TWST, "ns")
+  field( ZRVL, "0")
+  field( ONVL, "1")
+  field( TWVL, "2")
+}
+record( aSub, "$(P):AS:PRE:CH$(N)"){
+  field( DESC, "Unpack preamble string & scale data")
+  field( SNAM, "asPre")
+  field( INPA, "$(P):DATA:PRE:CH$(N)")
+  field( NOA,  "100")
+  field( FTA,  "CHAR")
+  field( INPB, "$(P):DATA:RAW:CH$(N)")
+  field( NOB,  "500")
+  field( FTB,  "SHORT")
+  field( INPC, "$(P):CAL:CH$(N)")
+  field( FTC,  "DOUBLE")
+  field( INPD, "$(P):UNITS:P:CH$(N)")
+  field( FTD,  "SHORT")
+  field( INPE, "$(P):UNITS:T:CH$(N)")
+  field( FTE,  "SHORT")
+  field( FTVA, "LONG")   field( NOVA, "1")
+  field( FTVB, "LONG")   field( NOVB, "1")
+  field( FTVC, "LONG")   field( NOVC, "1")
+  field( FTVD, "LONG")   field( NOVD, "1")
+  field( FTVE, "DOUBLE")  field( NOVE, "1")
+  field( FTVF, "DOUBLE")  field( NOVF, "1")
+  field( FTVG, "DOUBLE")  field( NOVG, "1")
+  field( FTVH, "DOUBLE")  field( NOVH, "1")
+  field( FTVI, "DOUBLE")  field( NOVI, "1")
+  field( FTVJ, "DOUBLE")  field( NOVJ, "1")
+  field( FTVK, "DOUBLE")  field( NOVK, "500")
+  field( FTVL, "DOUBLE")  field( NOVL, "500")
+  field( FTVM, "DOUBLE")  field( NOVM, "1")
+  field( FTVN, "DOUBLE")  field( NOVN, "1")
+  field( FTVO, "DOUBLE")  field( NOVO, "1")
+}
+record( mbbi, "$(P):DATA:FORMAT:CH$(N)") {
+  field( INP,  "$(P):AS:PRE:CH$(N).VALA")
+  field( ZRST, "ASCII")
+  field( ONST, "BYTE")
+  field( TWST, "WORD")
+  field( THST, "COMP")
+  field( ZRVL, "0")
+  field( ONVL, "1")
+  field( TWVL, "2")
+  field( THVL, "3")
+}
+record( mbbi, "$(P):DATA:TYPE:CH$(N)") {
+  field( INP,  "$(P):AS:PRE:CH$(N).VALB")
+  field( ZRST, "INVALID")
+  field( ONST, "NORMAL")
+  field( TWST, "AVERAGE")
+  field( THST, "ENVELOPE")
+  field( ZRVL, "0")
+  field( ONVL, "1")
+  field( TWVL, "2")
+  field( THVL, "3")
+}
+record( longin, "$(P):DATA:PTS:CH$(N)") {
+  field( INP,  "$(P):AS:PRE:CH$(N).VALC")
+}
+record( longin, "$(P):DATA:CNT:CH$(N)") {
+  field( INP,  "$(P):AS:PRE:CH$(N).VALD")
+}
+record( waveform, "$(P):DATA:SCALED:CH$(N)") {
+  field( INP,  "$(P):AS:PRE:CH$(N).VALK")
+  field( FTVL, "DOUBLE")
+  field( NELM, "500")
+}
+record( waveform, "$(P):TIME:SCALED:CH$(N)") {
+  field( INP,  "$(P):AS:PRE:CH$(N).VALL")
+  field( FTVL, "DOUBLE")
+  field( NELM, "500")
+}
+record( ai, "$(P):PMAX:CH$(N)") {
+  field( INP,  "$(P):AS:PRE:CH$(N).VALM")
+  field( PREC, "3")
+}
+record( ai, "$(P):PMIN:CH$(N)") {
+  field( INP,  "$(P):AS:PRE:CH$(N).VALN")
+  field( PREC, "3")
+}
+record( ai, "$(P):PAVE:CH$(N)") {
+  field( INP,  "$(P):AS:PRE:CH$(N).VALO")
+  field( PREC, "3")
+}
+
+
+

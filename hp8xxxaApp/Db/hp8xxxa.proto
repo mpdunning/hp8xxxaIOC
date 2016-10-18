@@ -1,0 +1,46 @@
+
+InTerminator=LF;
+#OutTerminator=CR;
+#ReadTimeout=1200;
+
+
+idn                { out "*idn?"              ;in "%s"                ;}
+getErr             { out ":syst:err? str"     ;in "%100c"             ;}
+getPowerUnits      { out ":syst:power:unit?"  ;in "%s"                ;}
+getSource          { out ":source?"           ;in "%s"                ;}
+#setPowerUnits      { out ":syst:power:unit %s"                        ;}
+
+getAcqType         { out ":acq:type?"         ;in "%s"                ;}
+getAcqCnt          { out ":acq:count?"        ;in "%s"                ;}
+getAcqPts          { out ":acq:points?"       ;in "%s"                ;}
+
+getSensorCh1       { out ":chan1:sens?"       ;in "%s"                ;}
+getSensorCh4       { out ":chan4:sens?"       ;in "%s"                ;}
+getBWModeCh1       { out ":chan1:bwm?"        ;in "%s"                ;}
+getBWModeCh4       { out ":chan4:bwm?"        ;in "%s"                ;}
+getFactCh1         { out ":chan1:fact?"       ;in "%E"                ;}
+getFactCh4         { out ":chan4:fact?"       ;in "%E"                ;}
+
+getFreqCh1         { out ":freq:chan1?"       ;in "%E"                ;}
+getFreqCh4         { out ":freq:chan4?"       ;in "%E"                ;}
+
+getTrigMode        { out ":trig:mode?"        ;in "%s"                ;}
+getTrigSource      { out ":trig:source?"      ;in "%s"                ;}
+getCouplingCh2     { out ":chan2:coup?"       ;in "%s"                ;}
+getCouplingCh3     { out ":chan3:coup?"       ;in "%s"                ;}
+getTrigLevel       { out ":trig:lev?"         ;in "%f"                ;}
+getTrigLevelUnits  { out ":trig:lev:units?"   ;in "%s"                ;}
+getTrigSlope       { out ":trig:slope?"       ;in "%s"                ;}
+
+getTimeDelay       { out ":tim:delay?"       ;in "%f"                 ;}
+setTimeDelay       { out ":tim:delay %f"                              ;}
+getTimeMode        { out ":tim:mode?"        ;in "%s"                 ;}
+getTimeRange       { out ":tim:range?"       ;in "%f"                 ;}
+setTimeRange       { out ":tim:range %f"                              ;}
+
+digCh1             { out ":dig %s"                                     ;}
+digCh4             { out ":dig %s"                                     ;}
+setWavSrc          { out ":wav:source chan%d"                         ;}
+getWav             { Separator=","            ;out ":wav:data?"       ;in "%d"                ;}
+getPre             { Separator=","            ;out ":wav:pre?"        ;in "%s"                ;}
+run                { out ":run"                                       ;}

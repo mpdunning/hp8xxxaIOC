@@ -1,0 +1,9 @@
+file hp8xxxaCh.template{
+    {N=1}
+    {N=4}
+}
+file hp8xxxaCtrl.db{
+    {N=0}
+}
+
+

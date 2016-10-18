@@ -1,0 +1,34 @@
+record( ao, "$(P):CH1PWR:MAX"){
+  field( DESC, "")
+  field( PREC, "3")
+}
+record( ao, "$(P):CH1PWR:AVE"){
+  field( DESC, "")
+  field( PREC, "3")
+}
+record( ao, "$(P):CH1PWR:MIN"){
+  field( DESC, "")
+  field( PREC, "3")
+}
+record( ao, "$(P):CH1PWR:PWD"){
+  field( DESC, "")
+  field( PREC, "3")
+}
+record( ao, "$(P):CH4PWR:MAX"){
+  field( DESC, "")
+  field( PREC, "3")
+}
+record( ao, "$(P):CH4PWR:AVE"){
+  field( DESC, "")
+  field( PREC, "3")
+}
+record( ao, "$(P):CH4PWR:MIN"){
+  field( DESC, "")
+  field( PREC, "3")
+}
+record( ao, "$(P):CH4PWR:PWD"){
+  field( DESC, "")
+  field( PREC, "3")
+}
+
+
